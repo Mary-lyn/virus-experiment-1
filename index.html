@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sicherheitswarnung</title>
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:Arial;
+background:#0a0f1c;
+color:white;
+}
+
+.card{
+background:#1c1f2e;
+padding:40px;
+border-radius:15px;
+text-align:center;
+width:90%;
+max-width:420px;
+box-shadow:0 0 40px rgba(0,0,0,0.8);
+animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+0%{box-shadow:0 0 15px red;}
+50%{box-shadow:0 0 40px red;}
+100%{box-shadow:0 0 15px red;}
+}
+
+h1{color:#ff5252;}
+
+.progress{
+margin-top:20px;
+background:#2a2e45;
+height:16px;
+border-radius:10px;
+overflow:hidden;
+}
+
+.bar{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,#ff5252,#ff0000);
+transition:width 0.3s;
+}
+
+.warning{
+margin-top:20px;
+color:#ff5252;
+font-weight:bold;
+display:none;
+}
+
+button{
+margin-top:25px;
+padding:15px;
+width:100%;
+border:none;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+background:#ff5252;
+color:white;
+font-weight:bold;
+display:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>⚠ Sicherheitswarnung</h1>
+
+<p>Verdächtige Aktivität auf Ihrem Gerät erkannt.</p>
+
+<div class="progress">
+<div class="bar" id="bar"></div>
+</div>
+
+<div id="status">Initialisiere Sicherheitsprüfung...</div>
+
+<div class="warning" id="warning">
+⚠ 5 KRITISCHE BEDROHUNGEN GEFUNDEN
+</div>
+
+<button id="fixbtn" onclick="window.location.href='bingo.html'">
+Gerät jetzt schützen
+</button>
+
+</div>
+
+<script>
+
+if(navigator.vibrate){
+navigator.vibrate([200,100,200]);
+}
+
+let progress=0;
+
+let bar=document.getElementById("bar");
+let status=document.getElementById("status");
+
+let messages=[
+"Scanne Systemdateien...",
+"Überprüfe Browser...",
+"Analysiere Netzwerk...",
+"Suche nach Malware..."
+];
+
+let scan=setInterval(()=>{
+
+progress+=4;
+
+bar.style.width=progress+"%";
+
+status.innerText=messages[Math.floor(Math.random()*messages.length)];
+
+if(progress>=100){
+
+clearInterval(scan);
+
+document.getElementById("warning").style.display="block";
+document.getElementById("fixbtn").style.display="block";
+
+status.innerText="Analyse abgeschlossen.";
+
+}
+
+},120);
+
+</script>
+
+</body>
+</html>

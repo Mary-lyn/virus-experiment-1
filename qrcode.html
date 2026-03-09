@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QR-Code Startseite</title>
+<style>
+body{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  font-family:Arial;
+  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:white;
+  flex-direction:column;
+  text-align:center;
+  margin:0;
+}
+
+h2{
+  margin-bottom:30px;
+}
+
+img{
+  width:250px;
+  height:250px;
+  border:10px solid white;
+  border-radius:20px;
+}
+</style>
+</head>
+<body>
+
+<h2>QR-Code scannen, um das Experiment zu starten</h2>
+<img id="qr" src="" alt="QR Code">
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+<script>
+// **Hier deine GitHub Pages URL einsetzen**
+let url = "https://Mary-lyn.github.io/virus-experiment/index.html";
+
+QRCode.toDataURL(url, {width:250}, function(err, dataUrl){
+  if(err) console.error(err);
+  document.getElementById("qr").src = dataUrl;
+});
+</script>
+
+</body>
+</html>
