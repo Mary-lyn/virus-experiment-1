@@ -1,86 +1,132 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
+
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Experiment Statistik</title>
+
+<title>Statistik</title>
 
 <style>
 
 body{
 margin:0;
-height:100vh;
+font-family:Arial, Helvetica, sans-serif;
+background:linear-gradient(135deg,#141e30,#243b55);
+color:white;
 display:flex;
 justify-content:center;
 align-items:center;
-font-family:Arial;
-background:linear-gradient(135deg,#16222a,#3a6073);
-color:white;
+min-height:100vh;
+padding:20px;
 }
 
 .card{
 background:rgba(255,255,255,0.08);
-backdrop-filter:blur(12px);
-padding:40px;
-border-radius:18px;
+padding:35px;
+border-radius:20px;
+max-width:420px;
+width:100%;
 text-align:center;
-max-width:500px;
+box-shadow:0 0 35px rgba(0,0,0,0.6);
 }
 
-.bar{
-height:20px;
+.stat{
+margin:20px 0;
+font-size:20px;
+}
+
+.barContainer{
 background:#333;
 border-radius:10px;
-margin:15px 0;
+height:25px;
+margin-top:8px;
 overflow:hidden;
 }
 
-.fill{
+.bar{
 height:100%;
-background:linear-gradient(90deg,#00e5ff,#00ffa6);
 width:0%;
+background:linear-gradient(90deg,#00e5ff,#00bcd4);
+}
+
+button{
+margin-top:25px;
+padding:14px;
+width:100%;
+border:none;
+border-radius:10px;
+font-size:16px;
+font-weight:bold;
+background:linear-gradient(45deg,#00e5ff,#00bcd4);
+cursor:pointer;
 }
 
 </style>
+
 </head>
 
 <body>
 
 <div class="card">
 
-<h2>📊 Experiment Statistik</h2>
+<h2>📊 Klassen-Statistik</h2>
 
-<p>Typische Reaktionen bei solchen Webseiten:</p>
-
-<div>
-<p>Klick auf Viruswarnung</p>
-<div class="bar"><div class="fill" id="bar1"></div></div>
+<div class="stat">
+Jetzt mit ihr schreiben
+<div class="barContainer">
+<div class="bar" id="writeBar"></div>
+</div>
+<span id="writeText"></span>
 </div>
 
-<div>
-<p>Belohnung angeklickt</p>
-<div class="bar"><div class="fill" id="bar2"></div></div>
+<div class="stat">
+Nein danke
+<div class="barContainer">
+<div class="bar" id="noBar"></div>
+</div>
+<span id="noText"></span>
 </div>
 
-<div>
-<p>Kontaktanfrage beantwortet</p>
-<div class="bar"><div class="fill" id="bar3"></div></div>
+<div class="stat">
+Gesamt Entscheidungen: <span id="total"></span>
 </div>
 
-<p style="margin-top:20px;">
-Viele Menschen klicken, weil Webseiten gezielt Emotionen ausnutzen.
-</p>
+<button onclick="resetStats()">Statistik zurücksetzen</button>
 
 </div>
 
 <script>
 
-setTimeout(()=>{
+let data = JSON.parse(localStorage.getItem("choices")) || {write:0,no:0};
 
-document.getElementById("bar1").style.width="72%";
-document.getElementById("bar2").style.width="63%";
-document.getElementById("bar3").style.width="41%";
+let total = data.write + data.no;
 
-},500);
+document.getElementById("total").innerText = total;
+
+if(total > 0){
+
+let writePercent = (data.write / total) * 100;
+let noPercent = (data.no / total) * 100;
+
+document.getElementById("writeBar").style.width = writePercent + "%";
+document.getElementById("noBar").style.width = noPercent + "%";
+
+document.getElementById("writeText").innerText =
+data.write + " (" + Math.round(writePercent) + "%)";
+
+document.getElementById("noText").innerText =
+data.no + " (" + Math.round(noPercent) + "%)";
+
+}
+
+function resetStats(){
+
+localStorage.removeItem("choices");
+
+location.reload();
+
+}
 
 </script>
 

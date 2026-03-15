@@ -1,121 +1,158 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Systemscan</title>
-
+<title>Sicherheitswarnung</title>
 <style>
-
 body{
-margin:0;
-font-family:Arial;
-background:#0a0f1c;
-color:white;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:#0b0b0b;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  padding:20px;
 }
 
-.card{
-background:#111827;
-padding:40px;
-border-radius:15px;
-width:90%;
-max-width:420px;
-text-align:center;
+/* Warnbox */
+.box{
+  background:#111;
+  border:3px solid red;
+  padding:35px 25px;
+  border-radius:15px;
+  max-width:420px;
+  width:100%;
+  text-align:center;
+  box-shadow:0 0 50px rgba(255,0,0,0.6);
+  animation:glow 2s infinite alternate;
 }
 
+/* roter Glow */
+@keyframes glow{
+  0%{box-shadow:0 0 20px rgba(255,0,0,0.5);}
+  100%{box-shadow:0 0 60px rgba(255,0,0,1);}
+}
+
+/* Warnsymbol */
+.warning{
+  font-size:60px;
+  color:red;
+  margin-bottom:10px;
+  animation:blink 1s infinite;
+}
+
+@keyframes blink{
+  0%{opacity:1;}
+  50%{opacity:0.3;}
+  100%{opacity:1;}
+}
+
+/* Scan Text */
+.scan{
+  font-size:18px;
+  margin-top:10px;
+  color:#ccc;
+}
+
+/* Fortschrittsbalken */
 .progress{
-width:100%;
-height:18px;
-background:#333;
-border-radius:10px;
-overflow:hidden;
-margin-top:20px;
+  height:22px;
+  background:#333;
+  border-radius:12px;
+  margin-top:20px;
+  overflow:hidden;
 }
 
 .bar{
-height:100%;
-width:0%;
-background:linear-gradient(90deg,#00e5ff,#00ffa6);
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#ff0000,#ff6600);
 }
 
-.warning{
-color:#ff5252;
-margin-top:20px;
-display:none;
+/* Virus Anzeige */
+.virusCount{
+  font-size:26px;
+  color:#ff3b3b;
+  margin-top:15px;
+  font-weight:bold;
 }
 
+/* Button */
 button{
-margin-top:25px;
-padding:14px;
-width:100%;
-border:none;
-border-radius:10px;
-background:#ff5252;
-color:white;
-display:none;
+  margin-top:25px;
+  padding:14px;
+  width:100%;
+  border:none;
+  border-radius:10px;
+  font-size:17px;
+  font-weight:bold;
+  background:linear-gradient(45deg,#ff0000,#ff6600);
+  color:white;
+  cursor:pointer;
+  transition:0.3s;
 }
 
+button:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 20px rgba(255,0,0,0.8);
+}
 </style>
 </head>
-
 <body>
 
-<div class="card">
+<div class="box">
 
-<h2>Systemprüfung läuft</h2>
+<div class="warning">⚠</div>
+
+<h2>Kritische Sicherheitswarnung</h2>
+
+<div class="scan">Systemscan läuft...</div>
 
 <div class="progress">
-<div class="bar" id="bar"></div>
+  <div class="bar" id="bar"></div>
 </div>
 
-<div id="status">Initialisiere Scan...</div>
+<div class="virusCount" id="virusText">0 Bedrohungen erkannt</div>
 
-<div class="warning" id="warning">
-⚠ 45 KRITISCHE BEDROHUNGEN ERKANNT
-</div>
-
-<button id="fixbtn" onclick="window.location.href='finale.html'">
-Bedrohungen beheben
+<!-- Button führt jetzt zur Statistik -->
+<button id="fixBtn" style="display:none;" onclick="goFinal()">
+Gerät jetzt schützen
 </button>
 
 </div>
 
 <script>
+let viruses = 0;
+let progress = 0;
+let virusText = document.getElementById("virusText");
+let bar = document.getElementById("bar");
+let fixBtn = document.getElementById("fixBtn");
 
-let progress=0;
+// Scan Animation
+let scan = setInterval(()=>{
+  progress += 3;
+  bar.style.width = progress + "%";
 
-let bar=document.getElementById("bar");
-let status=document.getElementById("status");
+  if(viruses < 45){
+    viruses += Math.floor(Math.random()*3);
+    if(viruses > 45) viruses = 45;
+    virusText.innerText = viruses + " Bedrohungen erkannt";
+  }
 
-let messages=[
-"Scanne Systemdateien...",
-"Überprüfe Browser...",
-"Analysiere Netzwerk...",
-"Suche nach Malware..."
-];
-
-let scan=setInterval(()=>{
-
-progress+=3;
-
-bar.style.width=progress+"%";
-
-status.innerText=messages[Math.floor(Math.random()*messages.length)];
-
-if(progress>=100){
-
-clearInterval(scan);
-
-document.getElementById("warning").style.display="block";
-document.getElementById("fixbtn").style.display="block";
-
-}
-
+  if(progress >= 100){
+    clearInterval(scan);
+    virusText.innerText = "⚠ 45 schwere Bedrohungen gefunden!";
+    fixBtn.style.display = "block";
+  }
 },120);
 
+// Weiterleitung zur Statistik-Seite
+function goFinal(){
+  window.location.href = "stats.html";
+}
 </script>
 
 </body>

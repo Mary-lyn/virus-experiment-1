@@ -2,51 +2,65 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Experiment beendet</title>
-
+<title>Belohnung</title>
 <style>
-
 body{
-margin:0;
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-font-family:Arial;
-background:linear-gradient(135deg,#1d976c,#93f9b9);
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  align-items:center;
+  font-family:Arial;
+  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:white;
+  padding:30px 10px 50px 10px;
 }
 
 .card{
-background:white;
-padding:45px;
-border-radius:18px;
-max-width:500px;
-text-align:center;
+  background: rgba(255,255,255,0.08);
+  padding:30px 20px;
+  border-radius:18px;
+  max-width:420px;
+  width:90%;
+  margin-bottom:40px;
+  box-shadow:0 0 25px rgba(0,0,0,0.6);
+  text-align:center;
 }
 
+h2{color:#4dff88;}
+button{
+  margin-top:15px;
+  padding:14px;
+  width:100%;
+  border:none;
+  border-radius:10px;
+  font-size:16px;
+  cursor:pointer;
+  font-weight:bold;
+  transition:0.25s;
+  background: linear-gradient(45deg,#4dff88,#2ecc71);
+  color:#003;
+}
+
+button:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 12px rgba(255,255,255,0.4);
+}
+
+@media only screen and (max-width:400px){
+  h2{font-size:1.4em;}
+  p{font-size:1em;}
+  button{font-size:14px; padding:12px;}
+}
 </style>
 </head>
-
 <body>
 
 <div class="card">
-
-<h1>🎭 Experiment beendet</h1>
-
-<p>Du wurdest durch mehrere typische Manipulationstechniken geführt.</p>
-
-<ul style="text-align:left;">
-<li>⚠ Angst durch Viruswarnungen</li>
-<li>🎁 Belohnungen</li>
-<li>🔥 Neugier</li>
-<li>❌ falsche Entscheidungen</li>
-<li>⏳ Zeitdruck</li>
-</ul>
-
-<button onclick="window.location.href='stats.html'">
-Statistik ansehen
-</button>
-
+<h2>🎉 Experiment abgeschlossen!</h2>
+<p>Keine Viren wurden tatsächlich gefunden. Dies war ein pädagogisches Beispiel, um Clickbait/Malware-Taktiken zu demonstrieren.</p>
+<button onclick="window.location.href='stats.html'">Zur Statistik</button>
 </div>
 
 </body>

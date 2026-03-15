@@ -1,54 +1,209 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
+
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neue Nachricht</title>
+<title>Kontaktentscheidung</title>
 
 <style>
 
 body{
 margin:0;
-height:100vh;
+min-height:100vh;
 display:flex;
-justify-content:center;
+flex-direction:column;
 align-items:center;
-font-family:Arial;
-background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+font-family:Arial, Helvetica, sans-serif;
+background:linear-gradient(135deg,#141e30,#243b55);
 color:white;
+padding:40px 15px;
+overflow-y:auto;
 }
+
+/* Karte */
 
 .card{
 background:rgba(255,255,255,0.08);
-padding:40px;
-border-radius:18px;
-text-align:center;
+backdrop-filter:blur(10px);
+padding:35px 25px;
+border-radius:20px;
 max-width:420px;
+width:100%;
+text-align:center;
+box-shadow:0 0 35px rgba(0,0,0,0.6);
+animation:glow 3s infinite alternate;
 }
 
-.avatar{
-width:80px;
-height:80px;
-border-radius:50%;
-background:linear-gradient(45deg,#00e5ff,#00ffa6);
+/* Flammen Container */
+
+.fire-box{
+position:relative;
+width:160px;
+height:200px;
+margin:0 auto 30px auto;
 display:flex;
 justify-content:center;
-align-items:center;
-font-size:32px;
-margin:auto;
+align-items:flex-end;
 }
+
+/* Flamme */
+
+.flame{
+position:absolute;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+}
+
+.yellow,.orange,.red{
+position:absolute;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+border-radius:50% 50% 40% 40%;
+animation:flicker 0.6s infinite alternate ease-in-out;
+}
+
+.yellow{
+width:50px;
+height:90px;
+background:radial-gradient(circle,#ffff99,#ffcc00);
+z-index:3;
+}
+
+.orange{
+width:80px;
+height:120px;
+background:radial-gradient(circle,#ffb347,#ff6600);
+z-index:2;
+}
+
+.red{
+width:110px;
+height:150px;
+background:radial-gradient(circle,#ff4500,#8b0000);
+filter:blur(5px);
+z-index:1;
+}
+
+/* Flammen Animation */
+
+@keyframes flicker{
+0%{transform:translateX(-50%) scale(1,1) rotate(-2deg);}
+50%{transform:translateX(-50%) scale(1.08,0.95) rotate(2deg);}
+100%{transform:translateX(-50%) scale(0.95,1.05) rotate(-1deg);}
+}
+
+/* Funken */
+
+.sparks span{
+position:absolute;
+bottom:70px;
+left:50%;
+width:8px;
+height:8px;
+background:orange;
+border-radius:50%;
+opacity:0;
+animation:spark 2s infinite;
+}
+
+.sparks span:nth-child(1){animation-delay:0s;}
+.sparks span:nth-child(2){animation-delay:0.4s;}
+.sparks span:nth-child(3){animation-delay:0.8s;}
+.sparks span:nth-child(4){animation-delay:1.2s;}
+.sparks span:nth-child(5){animation-delay:1.6s;}
+.sparks span:nth-child(6){animation-delay:2s;}
+
+@keyframes spark{
+0%{
+transform:translate(-50%,0) scale(1);
+opacity:1;
+}
+100%{
+transform:translate(-50%,-120px) scale(0);
+opacity:0;
+}
+}
+
+/* Rauch */
+
+.smoke span{
+position:absolute;
+bottom:100px;
+left:50%;
+width:35px;
+height:35px;
+background:rgba(200,200,200,0.2);
+border-radius:50%;
+filter:blur(10px);
+animation:smoke 4s infinite;
+}
+
+.smoke span:nth-child(1){animation-delay:0s;}
+.smoke span:nth-child(2){animation-delay:1.5s;}
+.smoke span:nth-child(3){animation-delay:3s;}
+
+@keyframes smoke{
+0%{
+transform:translate(-50%,0) scale(0.6);
+opacity:0.5;
+}
+100%{
+transform:translate(-50%,-140px) scale(1.8);
+opacity:0;
+}
+}
+
+/* Glow Effekt */
+
+@keyframes glow{
+0%{box-shadow:0 0 20px rgba(255,120,0,0.2);}
+100%{box-shadow:0 0 50px rgba(255,120,0,0.5);}
+}
+
+/* Buttons */
 
 button{
-width:100%;
+margin-top:15px;
 padding:15px;
-margin-top:10px;
+width:100%;
 border:none;
-border-radius:10px;
+border-radius:12px;
 font-size:16px;
+font-weight:bold;
 cursor:pointer;
+transition:0.25s;
 }
 
-.yes{background:#00e5ff;}
-.no{background:#555;color:white;}
+button:hover{
+transform:scale(1.05);
+box-shadow:0 0 15px rgba(255,255,255,0.4);
+}
+
+.mainbtn{
+background:linear-gradient(45deg,#00e5ff,#00bcd4);
+color:#002;
+}
+
+/* Mobile */
+
+@media(max-width:420px){
+
+h2{font-size:1.5em;}
+p{font-size:1em;}
+
+.fire-box{
+width:130px;
+height:170px;
+}
+
+.yellow{width:40px;height:70px;}
+.orange{width:65px;height:100px;}
+.red{width:90px;height:130px;}
+
+}
 
 </style>
 </head>
@@ -57,34 +212,57 @@ cursor:pointer;
 
 <div class="card">
 
-<div class="avatar">💬</div>
+<div class="fire-box">
 
-<h2>Neue Kontaktanfrage</h2>
+<div class="flame">
+<div class="yellow"></div>
+<div class="orange"></div>
+<div class="red"></div>
+</div>
 
-<p>Jemand möchte dir eine Nachricht schicken.</p>
+<div class="sparks">
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+</div>
 
-<button class="yes" onclick="next()">Jetzt antworten</button>
-<button class="no" onclick="next()">Nein danke</button>
+<div class="smoke">
+<span></span>
+<span></span>
+<span></span>
+</div>
+
+</div>
+
+<h2>Irene ist nur 5 km von dir entfernt</h2>
+<p>Was möchtest du tun?</p>
+
+<button class="mainbtn" onclick="recordChoice('write')">
+Jetzt mit ihr schreiben
+</button>
+
+<button class="mainbtn" onclick="recordChoice('no')">
+Nein danke
+</button>
 
 </div>
 
 <script>
 
-function next(){
-window.location.href="scan45.html";
+function recordChoice(choice){
+
+let counts = JSON.parse(localStorage.getItem('choices')) || {write:0,no:0};
+
+counts[choice]++;
+
+localStorage.setItem('choices', JSON.stringify(counts));
+
+window.location.href = "scan45.html";
+
 }
-
-let clicks=0;
-
-document.querySelector(".avatar").addEventListener("click",()=>{
-
-clicks++;
-
-if(clicks===5){
-alert("🥚 Easter Egg gefunden!");
-}
-
-});
 
 </script>
 
